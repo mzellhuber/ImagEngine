@@ -18,9 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="BYV-qY-3qf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dkj-lg-OSL">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xQI-2C-n5Q">
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -57,12 +60,16 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="BYV-qY-3qf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1TO-Vt-g8G"/>
                             <constraint firstItem="dkj-lg-OSL" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="6Jj-N9-YMo"/>
                             <constraint firstItem="dkj-lg-OSL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IgS-AB-YvY"/>
+                            <constraint firstItem="BYV-qY-3qf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Psj-BK-9Ic"/>
                             <constraint firstItem="dkj-lg-OSL" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="TPJ-6I-Gjc"/>
+                            <constraint firstItem="BYV-qY-3qf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yii-mX-jMv"/>
                             <constraint firstItem="dkj-lg-OSL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ga8-Jc-c3F"/>
+                            <constraint firstItem="BYV-qY-3qf" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="iIE-Vo-ZlU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -94,4 +101,7 @@
             <point key="canvasLocation" x="285.60000000000002" y="-564.46776611694156"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background" width="750" height="1334"/>
+    </resources>
 </document>

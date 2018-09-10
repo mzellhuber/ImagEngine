@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class FlickrViewerViewController: UIViewController {
     
@@ -28,11 +29,21 @@ class FlickrViewerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setUpNavigationBar()
         downloadInfo(parameters: parameters)
     }
     
+    func setUpNavigationBar() {
+        let logo = #imageLiteral(resourceName: "title")
+        let imageView = UIImageView(image:logo)
+        imageView.contentMode = .scaleAspectFit
+        self.navigationItem.titleView = imageView
+    }
+    
     func downloadInfo(parameters: [String:String]) {
+        var hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.label.text = "Loading"
         
         Networking().getData(url: url, params: parameters, onSuccess: { data in
             do{
@@ -42,19 +53,33 @@ class FlickrViewerViewController: UIViewController {
                 
                 for photo in (photos.photos?.photos)!{
                     let photoURL = "https://farm\(photo.farm!).staticflickr.com/\(photo.server!)/\(photo.id!)_\(photo.secret!).jpg"
+                    //print(photo.owner)
                     self.flickrImagesUrls.append(photoURL)
                 }
                 
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                    hud.hide(animated: true)
                 }
                 
             }catch {
-                print("Error: \(error)")
+                //print("Error: \(error)")
+                hud.hide(animated: true)
+                hud = self.errorHud()
             }
         }) { error in
-            print("error")
+            //print("error")
+            hud.hide(animated: true)
+            hud = self.errorHud()
         }
+    }
+    
+    func errorHud() -> MBProgressHUD {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.label.text = "An error happened, please try again"
+        hud.hide(animated: true, afterDelay: 2)
+        
+        return hud
     }
 
 }
