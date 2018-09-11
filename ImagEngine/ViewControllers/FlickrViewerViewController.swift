@@ -21,6 +21,7 @@ class FlickrViewerViewController: UIViewController {
     var flickrPhotos : [Photo] = []
     var flickrImagesUrls : [String] = []
     var isDownloading = false
+    let searchController = UISearchController(searchResultsController: nil)
     
     var scope = "relevance"
     
@@ -34,6 +35,7 @@ class FlickrViewerViewController: UIViewController {
         self.collectionView.prefetchDataSource = self
         setUpNavigationBar()
         setUp3DTouch()
+        setUpSearchBar()
         downloadInfo(parameters: parameters)
     }
     
@@ -42,6 +44,26 @@ class FlickrViewerViewController: UIViewController {
         let imageView = UIImageView(image:logo)
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView
+    }
+    
+    func setUpSearchBar() {
+        // Setup the Search Controller
+        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.searchBar.placeholder = "New Search"
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+        searchController.searchBar.delegate = self
+        definesPresentationContext = true
+        customizeSearchBar()
+    }
+    
+    func customizeSearchBar() {
+        //UIColor(red: 100.0, green: 76.1, blue: 69.0, alpha: 1.0)
+        for textField in searchController.searchBar.subviews.first!.subviews where textField is UITextField {
+            textField.subviews.first?.backgroundColor = .white
+            textField.subviews.first?.layer.cornerRadius = 10.5
+            textField.subviews.first?.layer.masksToBounds = true
+        }
     }
     
     func setUp3DTouch() {
@@ -54,6 +76,7 @@ class FlickrViewerViewController: UIViewController {
     }
     
     func downloadInfo(parameters: [String:String]) {
+        
         var hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "Loading"
         
@@ -100,6 +123,24 @@ class FlickrViewerViewController: UIViewController {
         isDownloading = true
         page = page + 1
         parameters["page"] = String(page)
+        downloadInfo(parameters: parameters)
+    }
+    
+    func search(tag:String, scope:String) {
+        parameters["tags"] = tag
+        parameters["sort"] = scope
+        if flickrImagesUrls.count != 0 {
+            self.collectionView?.scrollToItem(at: IndexPath(row: 0, section: 0),
+                                              at: .top,
+                                              animated: true)
+        }
+        
+        flickrPhotos = []
+        flickrImagesUrls = []
+        page = 0
+        
+        searchController.isActive = false
+        
         downloadInfo(parameters: parameters)
     }
 
@@ -188,5 +229,14 @@ extension FlickrViewerViewController : UIViewControllerPreviewingDelegate {
         previewingContext.sourceRect = cell.frame
         
         return detailVC
+    }
+}
+
+extension FlickrViewerViewController: UISearchBarDelegate{
+    // MARK: - UISearchBar Delegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            search(tag: text, scope:scope)
+        }
     }
 }
