@@ -20,6 +20,7 @@ class FlickrViewerViewController: UIViewController {
     let url = "https://api.flickr.com/services/rest/"
     var flickrPhotos : [Photo] = []
     var flickrImagesUrls : [String] = []
+    var isDownloading = false
     
     var scope = "relevance"
     
@@ -30,6 +31,7 @@ class FlickrViewerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.collectionView.prefetchDataSource = self
         setUpNavigationBar()
         setUp3DTouch()
         downloadInfo(parameters: parameters)
@@ -55,6 +57,8 @@ class FlickrViewerViewController: UIViewController {
         var hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "Loading"
         
+        isDownloading = true
+        
         Networking().getData(url: url, params: parameters, onSuccess: { data in
             do{
                 let photos = try JSONDecoder().decode(FlickrResponse.self, from: data)
@@ -63,23 +67,23 @@ class FlickrViewerViewController: UIViewController {
                 
                 for photo in (photos.photos?.photos)!{
                     let photoURL = "https://farm\(photo.farm!).staticflickr.com/\(photo.server!)/\(photo.id!)_\(photo.secret!).jpg"
-                    //print(photo.owner)
                     self.flickrImagesUrls.append(photoURL)
                 }
                 
                 DispatchQueue.main.async {
+                    self.isDownloading = false
                     self.collectionView.reloadData()
                     hud.hide(animated: true)
                 }
                 
             }catch {
-                //print("Error: \(error)")
                 hud.hide(animated: true)
+                print("Error: \(error)")
                 hud = self.errorHud()
             }
         }) { error in
-            //print("error")
             hud.hide(animated: true)
+            print("error")
             hud = self.errorHud()
         }
     }
@@ -90,6 +94,13 @@ class FlickrViewerViewController: UIViewController {
         hud.hide(animated: true, afterDelay: 2)
         
         return hud
+    }
+    
+    func loadMore() {
+        isDownloading = true
+        page = page + 1
+        parameters["page"] = String(page)
+        downloadInfo(parameters: parameters)
     }
 
 }
@@ -135,6 +146,19 @@ extension FlickrViewerViewController : UICollectionViewDataSource, UICollectionV
         return true
     }
     
+}
+
+extension FlickrViewerViewController : UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        let arrayCount = flickrPhotos.count - 1
+        
+        for indexPath in indexPaths{
+            //print(indexPath)
+            if indexPath.contains(arrayCount) && !isDownloading{
+                loadMore()
+            }
+        }
+    }
 }
 
 extension FlickrViewerViewController : UIViewControllerPreviewingDelegate {
