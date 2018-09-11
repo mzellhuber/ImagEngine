@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F6E97BB21471E6100BE6829 /* PeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6E97BA21471E6100BE6829 /* PeekViewController.swift */; };
 		2F9A38AA2146CB3600068A06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9A38A92146CB3600068A06 /* AppDelegate.swift */; };
 		2F9A38AF2146CB3600068A06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F9A38AD2146CB3600068A06 /* Main.storyboard */; };
 		2F9A38B12146CB3700068A06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F9A38B02146CB3700068A06 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F6E97BA21471E6100BE6829 /* PeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeekViewController.swift; sourceTree = "<group>"; };
 		2F9A38A62146CB3600068A06 /* ImagEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F9A38A92146CB3600068A06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F9A38AE2146CB3600068A06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				2F9A38CA2147021400068A06 /* Cells */,
 				2F9A38BD2146F08300068A06 /* FlickrViewerViewController.swift */,
+				2F6E97BA21471E6100BE6829 /* PeekViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				2F9A38CC2147023000068A06 /* ImageCollectionViewCell.swift in Sources */,
 				2F9A38C02146F26C00068A06 /* Photo.swift in Sources */,
 				2F9A38C42146F29F00068A06 /* FlickrResponse.swift in Sources */,
+				2F6E97BB21471E6100BE6829 /* PeekViewController.swift in Sources */,
 				2F9A38C72146F73C00068A06 /* Networking.swift in Sources */,
 				2F9A38AA2146CB3600068A06 /* AppDelegate.swift in Sources */,
 				2F9A38BE2146F08300068A06 /* FlickrViewerViewController.swift in Sources */,

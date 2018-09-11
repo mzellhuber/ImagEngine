@@ -31,6 +31,7 @@ class FlickrViewerViewController: UIViewController {
         super.viewDidLoad()
         
         setUpNavigationBar()
+        setUp3DTouch()
         downloadInfo(parameters: parameters)
     }
     
@@ -39,6 +40,15 @@ class FlickrViewerViewController: UIViewController {
         let imageView = UIImageView(image:logo)
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView
+    }
+    
+    func setUp3DTouch() {
+        //MARK: - Check and register for 3D Touch
+        if( traitCollection.forceTouchCapability == .available){
+            registerForPreviewing(with: self, sourceView: view)
+        }else{
+            print("3D Touch not available")
+        }
     }
     
     func downloadInfo(parameters: [String:String]) {
@@ -118,4 +128,41 @@ extension FlickrViewerViewController : UICollectionViewDataSource, UICollectionV
         //Go to detail
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "peekSegue"{
+            return false
+        }
+        return true
+    }
+    
+}
+
+extension FlickrViewerViewController : UIViewControllerPreviewingDelegate {
+    //Pop
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        //commit
+    }
+    
+    //Peek
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        guard let indexPath = collectionView?.indexPathForItem(at:location) else { return nil }
+        
+        guard let cell = collectionView?.cellForItem(at: indexPath) else { return nil }
+        
+        guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "PeekViewController") as? PeekViewController else { return nil }
+        
+        let photo = flickrPhotos[indexPath.row]
+        let imagePhoto = (collectionView.cellForItem(at: indexPath) as! ImageCollectionViewCell).imgView.image
+        detailVC.photo = imagePhoto
+        
+        detailVC.flickrViewController = self
+        detailVC.imgTitle = photo.title
+        
+        detailVC.preferredContentSize = CGSize(width: (imagePhoto?.size.width)! * (imagePhoto?.scale)!, height: (imagePhoto?.size.height)! * (imagePhoto?.scale)!)
+        
+        previewingContext.sourceRect = cell.frame
+        
+        return detailVC
+    }
 }

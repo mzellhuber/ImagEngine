@@ -51,6 +51,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="imgView" destination="lkV-nc-2XK" id="W9R-3B-ryL"/>
+                                            <segue destination="zDJ-DV-19w" kind="show" identifier="peekSegue" id="GR7-0D-jTl"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -81,6 +82,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1245.5999999999999" y="-564.46776611694156"/>
+        </scene>
+        <!--Peek View Controller-->
+        <scene sceneID="kpz-It-dGA">
+            <objects>
+                <viewController storyboardIdentifier="PeekViewController" id="zDJ-DV-19w" customClass="PeekViewController" customModule="ImagEngine" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="o9H-zF-8MI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="77p-kC-3hg">
+                                <rect key="frame" x="8" y="72" width="359" height="523"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="77p-kC-3hg" firstAttribute="leading" secondItem="PqR-j7-xzC" secondAttribute="leading" constant="8" id="Iw8-6X-BMi"/>
+                            <constraint firstItem="77p-kC-3hg" firstAttribute="centerY" secondItem="o9H-zF-8MI" secondAttribute="centerY" id="P4B-6p-diy"/>
+                            <constraint firstItem="77p-kC-3hg" firstAttribute="centerX" secondItem="o9H-zF-8MI" secondAttribute="centerX" id="bhC-pX-H12"/>
+                            <constraint firstItem="PqR-j7-xzC" firstAttribute="trailing" secondItem="77p-kC-3hg" secondAttribute="trailing" constant="8" id="hpH-EJ-gvf"/>
+                            <constraint firstItem="77p-kC-3hg" firstAttribute="top" secondItem="PqR-j7-xzC" secondAttribute="top" constant="8" id="rgI-nT-rgb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PqR-j7-xzC"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgView" destination="77p-kC-3hg" id="Ycb-Vd-dha"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jz4-Ir-MNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2084" y="-564.46776611694156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Dgb-Hb-Lbg">
