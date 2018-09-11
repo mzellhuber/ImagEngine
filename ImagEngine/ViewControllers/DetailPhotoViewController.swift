@@ -19,6 +19,7 @@ class DetailPhotoViewController: UIViewController {
     var flickrImagesUrls : [String] = []
     var flickrPhotos : [Photo] = []
     let url = "https://api.flickr.com/services/rest/"
+    var photoURL = ""
 
     
     // MARK: - IBOutlets
@@ -48,6 +49,7 @@ class DetailPhotoViewController: UIViewController {
         if let title = photo.title {
             self.title = title
         }
+        
     }
     
     func setBarButtonItem() {
@@ -76,6 +78,9 @@ class DetailPhotoViewController: UIViewController {
                 if let username = user.person {
                     DispatchQueue.main.async {
                         if let name  = username.username {
+                            self.photoURL = "https://www.flickr.com/photos/\(username.id!)/\(self.photo.id!)"
+                            //print(self.photoURL)
+                            
                             self.profileURL = "https://www.flickr.com/people/\(username.id!)/"
                             self.userBtn.setTitle(name._content, for: .normal)
                         }
@@ -141,7 +146,7 @@ class DetailPhotoViewController: UIViewController {
     @objc func share() {
         let text = photo.title!
         let image = img
-        let shareAll = [text , image! , URL(string: profileURL)!] as [Any]
+        let shareAll = [text , img ,URL(string: photoURL)!] as [Any]
         let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)

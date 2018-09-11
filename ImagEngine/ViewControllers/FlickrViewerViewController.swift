@@ -95,14 +95,19 @@ class FlickrViewerViewController: UIViewController {
         
         Networking().getData(url: url, params: parameters, onSuccess: { data in
             do{
+                
                 let photos = try JSONDecoder().decode(FlickrResponse.self, from: data)
                 
-                self.flickrPhotos = self.flickrPhotos + (photos.photos?.photos)!
-                
-                for photo in (photos.photos?.photos)!{
-                    let photoURL = "https://farm\(photo.farm!).staticflickr.com/\(photo.server!)/\(photo.id!)_\(photo.secret!).jpg"
-                    self.flickrImagesUrls.append(photoURL)
+                if photos != nil {
+                    self.flickrPhotos = self.flickrPhotos + (photos.photos?.photos)!
+                    
+                    for photo in (photos.photos?.photos)!{
+                        let photoURL = "https://farm\(photo.farm!).staticflickr.com/\(photo.server!)/\(photo.id!)_\(photo.secret!).jpg"
+                        self.flickrImagesUrls.append(photoURL)
+                    }
                 }
+                
+                
                 
                 DispatchQueue.main.async {
                     self.isDownloading = false
