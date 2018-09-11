@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor(red: 247/255, green: 141/255, blue: 109/255, alpha: 1.0)
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         UISearchBar.appearance().tintColor = .white
+        UINavigationBar.appearance().tintColor = .white
 
         return true
     }

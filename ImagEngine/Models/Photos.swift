@@ -12,7 +12,6 @@ struct Photos : Codable {
     let page : Int?
     let pages : Int?
     let perpage : Int?
-    let total : String?
     let photos : [Photo]?
     
     enum CodingKeys: String, CodingKey {
@@ -20,7 +19,6 @@ struct Photos : Codable {
         case page = "page"
         case pages = "pages"
         case perpage = "perpage"
-        case total = "total"
         case photos = "photo"
     }
     
@@ -29,7 +27,6 @@ struct Photos : Codable {
         page = try values.decodeIfPresent(Int.self, forKey: .page)
         pages = try values.decodeIfPresent(Int.self, forKey: .pages)
         perpage = try values.decodeIfPresent(Int.self, forKey: .perpage)
-        total = try values.decodeIfPresent(String.self, forKey: .total)
         photos = try values.decodeIfPresent([Photo].self, forKey: .photos)
     }
     

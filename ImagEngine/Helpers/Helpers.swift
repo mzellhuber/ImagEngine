@@ -27,7 +27,7 @@ extension UIImageView {
             data, response, error in
             
             if error != nil{
-                print(error!)
+                //print(error!)
                 return
             }
             

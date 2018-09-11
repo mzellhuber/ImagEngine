@@ -16,7 +16,6 @@ struct Photo : Codable {
     let farm : Int?
     let title : String?
     let ispublic : Int?
-    let isfriend : Int?
     let isfamily : Int?
     let tags : String?
     
@@ -29,7 +28,6 @@ struct Photo : Codable {
         case farm = "farm"
         case title = "title"
         case ispublic = "ispublic"
-        case isfriend = "isfriend"
         case isfamily = "isfamily"
         case tags = "tags"
     }
@@ -43,7 +41,6 @@ struct Photo : Codable {
         farm = try values.decodeIfPresent(Int.self, forKey: .farm)
         title = try values.decodeIfPresent(String.self, forKey: .title)
         ispublic = try values.decodeIfPresent(Int.self, forKey: .ispublic)
-        isfriend = try values.decodeIfPresent(Int.self, forKey: .isfriend)
         isfamily = try values.decodeIfPresent(Int.self, forKey: .isfamily)
         tags = try values.decodeIfPresent(String.self, forKey: .tags)
     }

@@ -25,6 +25,9 @@ class FlickrViewerViewController: UIViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var scope = "relevance"
     
+    var detailPhoto:Photo?
+    var detailImage:UIImage?
+    
     var parameters = ["per_page":"50", "page":String(1), "nojsoncallback":"1", "format":"json", "tags": "pretty food, amazing food, food photography", "method":"flickr.photos.search", "api_key":"2c52226553a9808f63bfa82b50719b7c", "sort":"relevance"]
     
     fileprivate let reuseIdentifier = "ImageCell"
@@ -79,7 +82,7 @@ class FlickrViewerViewController: UIViewController {
         if( traitCollection.forceTouchCapability == .available){
             registerForPreviewing(with: self, sourceView: view)
         }else{
-            print("3D Touch not available")
+            //print("3D Touch not available")
         }
     }
     
@@ -108,21 +111,33 @@ class FlickrViewerViewController: UIViewController {
                 }
                 
             }catch {
-                hud.hide(animated: true)
-                print("Error: \(error)")
-                hud = self.errorHud()
+                //print("Error: \(error)")
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    hud = self.errorHud()
+                }
             }
         }) { error in
-            hud.hide(animated: true)
-            print("error")
-            hud = self.errorHud()
+            
+            if (error as NSError).code == 8 {
+                hud.show(animated: true)
+                hud.label.text = "Please check your internet connection"
+                
+                hud.hide(animated: true, afterDelay: 2.0)
+            }else{
+                DispatchQueue.main.async {
+                    hud.hide(animated: true)
+                    hud = self.errorHud()
+                }
+            }
         }
+        
     }
     
     func errorHud() -> MBProgressHUD {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.label.text = "An error happened, please try again"
-        hud.hide(animated: true, afterDelay: 2)
+        hud.hide(animated: true, afterDelay: 3)
         
         return hud
     }
@@ -190,7 +205,12 @@ extension FlickrViewerViewController : UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //Go to detail
+        let detailVC = self.storyboard?.instantiateViewController(withIdentifier: "DetailPhotoVC") as! DetailPhotoViewController
+        let photo = flickrPhotos[indexPath.row]
+        let imagePhoto = (collectionView.cellForItem(at: indexPath) as! ImageCollectionViewCell).imgView.image
+        detailVC.photo = photo
+        detailVC.img = imagePhoto
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
