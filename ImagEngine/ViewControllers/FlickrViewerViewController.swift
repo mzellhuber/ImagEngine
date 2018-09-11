@@ -22,7 +22,6 @@ class FlickrViewerViewController: UIViewController {
     var flickrImagesUrls : [String] = []
     var isDownloading = false
     let searchController = UISearchController(searchResultsController: nil)
-    
     var scope = "relevance"
     
     var parameters = ["per_page":"50", "page":String(1), "nojsoncallback":"1", "format":"json", "tags": "pretty food, amazing food, food photography", "method":"flickr.photos.search", "api_key":"2c52226553a9808f63bfa82b50719b7c", "sort":"relevance"]
@@ -53,6 +52,7 @@ class FlickrViewerViewController: UIViewController {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
+        searchController.searchBar.scopeButtonTitles = ["Relevance", "Newest"]
         definesPresentationContext = true
         customizeSearchBar()
     }
@@ -237,6 +237,19 @@ extension FlickrViewerViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let text = searchBar.text {
             search(tag: text, scope:scope)
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        switch searchBar.scopeButtonTitles![selectedScope] {
+        case "Relevant":
+            scope = "relevance"
+            break
+        case "Newest":
+            scope = "date-posted-desc"
+            break
+        default:
+            scope = "relevance"
         }
     }
 }
