@@ -74,7 +74,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="FKd-HG-zt2"/>
+                    <navigationItem key="navigationItem" id="FKd-HG-zt2">
+                        <barButtonItem key="rightBarButtonItem" image="food" id="J7m-Rd-g6W">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="getFoodPhotos:" destination="BYZ-38-t0r" id="4JT-VE-Ha6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="dkj-lg-OSL" id="4KM-oV-SiP"/>
                     </connections>
@@ -134,5 +141,6 @@
     </scenes>
     <resources>
         <image name="background" width="750" height="1334"/>
+        <image name="food" width="30" height="30"/>
     </resources>
 </document>

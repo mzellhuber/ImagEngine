@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import TBEmptyDataSet
 
 class FlickrViewerViewController: UIViewController {
     
@@ -36,13 +37,20 @@ class FlickrViewerViewController: UIViewController {
         setUp3DTouch()
         setUpSearchBar()
         downloadInfo(parameters: parameters)
+        
+        self.collectionView?.emptyDataSetDataSource = self
+        self.collectionView?.emptyDataSetDelegate = self
     }
     
     func setUpNavigationBar() {
         let logo = #imageLiteral(resourceName: "title")
         let imageView = UIImageView(image:logo)
-        imageView.contentMode = .scaleAspectFit
-        self.navigationItem.titleView = imageView
+        imageView.contentMode = .scaleAspectFill
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        imageView.frame = titleView.bounds
+        titleView.addSubview(imageView)
+        
+        self.navigationItem.titleView = titleView
     }
     
     func setUpSearchBar() {
@@ -143,6 +151,11 @@ class FlickrViewerViewController: UIViewController {
         
         downloadInfo(parameters: parameters)
     }
+    
+    @IBAction func getFoodPhotos(_ sender: Any) {
+        search(tag: foodTags, scope: scope)
+    }
+    
 
 }
 
@@ -251,5 +264,28 @@ extension FlickrViewerViewController: UISearchBarDelegate{
         default:
             scope = "relevance"
         }
+    }
+}
+
+extension FlickrViewerViewController : TBEmptyDataSetDelegate, TBEmptyDataSetDataSource {
+    func imageForEmptyDataSet(in scrollView: UIScrollView) -> UIImage? {
+        return #imageLiteral(resourceName: "sad")
+    }
+    
+    func titleForEmptyDataSet(in scrollView: UIScrollView) -> NSAttributedString? {
+        let attributes = [.font : UIFont.systemFont(ofSize: 22),
+                          .foregroundColor: UIColor.gray] as [NSAttributedStringKey: Any]?
+        
+        return NSAttributedString(string: "There are no results for this", attributes: attributes)
+    }
+    
+    func descriptionForEmptyDataSet(in scrollView: UIScrollView) -> NSAttributedString? {
+        let attributes = [.font: UIFont.systemFont(ofSize: 17),
+                          .foregroundColor: UIColor.gray] as [NSAttributedStringKey: Any]?
+        return NSAttributedString(string: "Please try another search", attributes: attributes)
+    }
+    
+    func emptyDataSetShouldDisplay(in scrollView: UIScrollView) -> Bool {
+        return flickrPhotos.count == 0
     }
 }
