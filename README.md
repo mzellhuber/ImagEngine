@@ -1,6 +1,6 @@
 # ImagEngine
 
-An iOS app that uses the Flickr API to show you the best photos
+An iOS app that uses the Flickr API to show you the best photos for you to share them with your friends.
 
 Enjoy a collection of delicious food
 ![ImagEngine Main Screen](https://i.imgur.com/fiezV4R.jpg)
